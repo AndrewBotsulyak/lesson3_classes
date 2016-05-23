@@ -1,0 +1,170 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Student
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Student s = new Student();
+            s.SetSur("Botsulyak");
+            s.SetName("Andrew");
+            s.SetLast("Vasilievich");
+            Date d = new Date(1990,10,1);
+            s.SetDate(d);
+            s.SetAdress("Odessa city");
+            s.SetPhone("555-32-434-543");
+            s.SetZachet(5, 4, 5);
+            s.SetCourse(3, 4, 4);
+            s.SetExam(2, 4, 5);
+            s.AllInformation();
+
+            Console.WriteLine();
+            Student s2 = new Student();
+            Student s3 = new Student();
+            Console.WriteLine("Количество созданых объектов Student : {0}",Student.GetCountOfStudent());
+
+        }
+    }
+
+    struct Date
+    {
+        private int Year;
+        private int month;
+        private int day;
+
+        public Date(int y, int m, int d)
+        {
+            Year = y;
+            month = m;
+            day = d;
+        }
+        public void SetDate(int y, int m, int d)
+        {
+            Year = y;
+            month = m;
+            day = d;
+        }
+         public override string ToString()
+        {
+            return String.Format("{0}-{1}-{2}", Year, month, day);
+        } 
+
+        public static Date GetDate() // статический метод для передачи в конструктор без параметров Student();
+        {
+            return new Date();
+        }
+    }
+
+   class Student
+    {
+        private string surname;
+        private string name;
+        private string lastname;
+        private Date birthday;
+        private string adress;
+        private string phonenum;
+
+        private int[] zachet;
+        private int[] course;
+        private int[] exam;
+
+        private static int studcount; // количество объектов Student;
+        int count;
+        public Student() : this("","","",Date.GetDate(),"","")
+        { }
+        public Student(string sur, string nam, string lastn, Date birth)
+            : this(sur, nam, lastn, birth, "none", "none")
+        { }
+        public Student(string sur, string nam, string lastn, Date birth, string adr = "none", string phone = "none")
+        {
+            surname = sur;
+            name = nam;
+            lastname = lastn;
+            birthday = birth;
+            adress = adr;
+            phonenum = phone;
+
+            count = 3;
+            zachet = new int[count];
+            course = new int[count];
+            exam = new int[count];
+
+            studcount++; // static member
+        }
+
+        public void SetSur(string sur) { surname = sur; }
+        public void SetName(string nam) { name = nam; }
+        public void SetLast(string last) { lastname = last; }
+        public void SetDate(Date d) { birthday = d; }
+        public void SetAdress(string a) { adress = a; }
+        public void SetPhone(string p) { phonenum = p; }
+        public void SetZachet(int math , int physics , int programing )
+        {
+            zachet[0] = math;
+            zachet[1] = physics;
+            zachet[2] = programing;
+        }
+        public void SetCourse(int network , int cpp , int java )
+        {
+            course[0] = network;
+            course[1] = cpp;
+            course[2] = java;
+        }
+        public void SetExam(int cisco, int oop, int c)
+        {
+            exam[0] = cisco;
+            exam[1] = oop;
+            exam[2] = c;
+        }
+
+        public string GetSur() { return surname; }
+        public string GetName() { return name; }
+        public string GetLastName() { return lastname; }
+        public Date GetDate() { return birthday; }
+        public string GetAdress() { return adress; }
+        public string GetPhone() { return phonenum; }
+
+        public void GetZachet() 
+        {
+            Console.WriteLine("Math : {0}",zachet[0]);
+            Console.WriteLine("Physics : {0}",zachet[1]);
+            Console.WriteLine("Programming : {0}",zachet[2]);
+            
+        }
+        public void GetCourse()
+        {
+            Console.WriteLine("Network : {0}", course[0]);
+            Console.WriteLine("C++ : {0}", course[1]);
+            Console.WriteLine("Java : {0}", course[2]);
+        }
+        public void GetExam()
+        {
+            Console.WriteLine("Cisco : {0}", exam[0]);
+            Console.WriteLine("OOP : {0}", exam[1]);
+            Console.WriteLine("C language : {0}", exam[2]);
+        }
+
+        public static int GetCountOfStudent() { return studcount; } // статический метод колич. студентов.
+        public void AllInformation()
+        {
+            Console.WriteLine("\t\tСтудент :");
+            //Console.WriteLine("Фамилия : {0}, Имя : {1}, Отчество : {2}", GetSur(), GetName(), GetLastName());
+            Console.WriteLine("Фамилия : {0}", GetSur());
+            Console.WriteLine("Имя : {0}",GetName());
+            Console.WriteLine("Отчество : {0}", GetLastName());
+            Console.WriteLine("Дата Рождения : {0}", GetDate());
+            Console.WriteLine("Адрес проживания : {0}", GetAdress());
+            Console.WriteLine("Номер телефона : {0}", GetPhone());
+            GetZachet();
+            GetCourse();
+            GetExam();
+        }
+
+
+    }
+}
